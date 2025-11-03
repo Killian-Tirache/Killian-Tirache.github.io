@@ -1,0 +1,18 @@
+.not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.not-found a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found img {
+    border-radius: var(--border-radius);
+    width: 80%;
+    margin: 2rem;
+}

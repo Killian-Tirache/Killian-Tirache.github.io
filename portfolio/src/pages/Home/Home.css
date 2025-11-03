@@ -1,0 +1,124 @@
+.home {
+    display: flex;
+    margin-top: 2rem;
+}
+
+.home__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    padding: var(--padding-section);
+}
+
+.home__text h1 {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.home__text img {
+    width: 10%;
+}
+
+.home__text span {
+    color: var(--primary-color);
+    text-transform: uppercase;
+}
+
+.home__projects {
+    padding: var(--padding-section);
+}
+
+.home__projects-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap-section);
+    padding-top: var(--padding-section);
+    padding-bottom: var(--padding-section);
+    margin: 1rem 0 1rem 0;
+}
+
+.home__project_container {
+    position: relative;
+    width: calc(33.333% - 1.4rem);
+    height: 25rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--secondary-color) 0px 4px 5px 3px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s;
+}
+
+.home__project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.45);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.home__project:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+}
+
+.home__project::before,
+.home__project::after {
+  position: absolute;
+  content: "";
+  width: 20%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-h4);
+  font-weight: bold;
+  background-color: var(--primary-color);
+  transition: all 0.5s;
+}
+
+.home__project::before {
+  top: 0;
+  right: 0;
+  border-radius: 0 var(--border-radius) 0 100%;
+}
+
+.home__project::after {
+  bottom: 0;
+  left: 0;
+  border-radius: 0 100%  0 var(--border-radius);
+}
+
+.home__project:hover::before,
+.home__project:hover:after {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  transition: all 0.5s;
+  padding: var(--padding-section);
+}
+
+.home__project:hover:after {
+    content: "Cliquez ici pour en savoir plus";
+}
+
+.home__project h3 {
+    position: relative;
+}
+
+.home__about {
+    padding: var(--padding-section);
+}
+
+.home__about span {
+    color: var(--primary-color);
+    font-weight: bold;
+}

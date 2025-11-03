@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: var(--padding-section) 0;
+    position: sticky;
+    top: 0;
+    transition: 0.3s ease-in-out;
+    z-index: 2;
+}
+
+.sticky {
+    backdrop-filter: blur(15px) !important;
+    background-color: rgba(27, 26, 46, 0.663) !important;
+    box-shadow: rgba(9, 5, 29, 0.173) 0px 10px 10px 0px !important;
+}
+
+.header h2 {
+    color: var(--primary-color);
+}

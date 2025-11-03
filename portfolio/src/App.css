@@ -1,0 +1,43 @@
+@import './styles/varibles.css';
+
+body {
+  font-family: var(--font-main);
+  color: var(--text-color);
+  overflow-x: hidden;
+  background-color: #0b0914;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+p {
+  font-size: var(--font-size-text);
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: var(--font-size-text);
+}
+
+main {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+}

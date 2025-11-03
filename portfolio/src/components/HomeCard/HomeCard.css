@@ -1,0 +1,9 @@
+.home__image {
+    width: 50%;
+    padding: var(--padding-section);
+    perspective: 1000px;
+}
+
+.home__image img {
+    border-radius: 10px;
+}
