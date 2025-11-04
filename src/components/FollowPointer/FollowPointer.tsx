@@ -1,10 +1,32 @@
 import "./FollowPointer.css"
 import { frame, motion, useSpring } from "framer-motion"
-import { RefObject, useEffect, useRef } from "react"
+import { RefObject, useEffect, useRef, useState } from "react"
 
 export default function FollowPointer() {
     const ref = useRef<HTMLDivElement>(null)
     const { x, y } = useFollowPointer(ref)
+    const [isTouchDevice, setIsTouchDevice] = useState(false)
+
+    useEffect(() => {
+        const checkTouchDevice = () => {
+            return (
+                'ontouchstart' in window ||
+                navigator.maxTouchPoints > 0 ||
+                window.innerWidth <= 1024
+            )
+        }
+
+        setIsTouchDevice(checkTouchDevice())
+
+        const handleResize = () => {
+            setIsTouchDevice(checkTouchDevice())
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    if (isTouchDevice) return null
 
     return <motion.div className="follow-pointer" ref={ref} style={{ x, y }} />
 }

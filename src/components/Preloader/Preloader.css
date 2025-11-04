@@ -12,7 +12,7 @@
     text-transform: capitalize;
     font-size: var(--font-size-h3);
     font-weight: bold;
-    z-index: 10;
+    z-index: 9999;
     transition: opacity 0.7s ease-in-out;
 }
 

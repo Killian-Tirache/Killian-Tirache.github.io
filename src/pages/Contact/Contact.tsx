@@ -23,7 +23,7 @@ export default function Contact() {
 
     await new Promise((r) => setTimeout(r, 900));
     setSubmitting(false);
-    setStatus({ ok: true, msg: "Merci ! Ton message a bien été envoyé." });
+    setStatus({ ok: true, msg: "Désolé, mais ce formulaire n'est pas fonctionnel." });
     setFormData({ name: "", email: "", message: "" });
   };
 

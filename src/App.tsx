@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
@@ -16,6 +16,17 @@ import Contact from "./pages/Contact/Contact";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="app">
       <Preloader setIsLoading={setIsLoading} />
@@ -31,7 +42,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes> }
-      <FollowPointer />
+      {isDesktop && <FollowPointer />}
       <Footer />
     </div>
   );

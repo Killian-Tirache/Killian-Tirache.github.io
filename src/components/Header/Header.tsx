@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
     const [isSticky, setIsSticky] = useState<Boolean>(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
     
     useEffect(() => {
         const handleScroll = () => {
@@ -15,13 +16,32 @@ export default function Header() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    // Fermer le menu au clic sur un lien
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
     
     return (
         <header className={isSticky ? "header sticky" : "header"}>
-            <Link to="/">
+            <Link to="/" onClick={closeMobileMenu}>
                 <h2>Kt.</h2>
             </Link>
-            <Navbar />
+            
+            <button 
+                className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Menu"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <Navbar 
+                isMobileMenuOpen={isMobileMenuOpen} 
+                closeMobileMenu={closeMobileMenu}
+            />
         </header>
     )
 }
