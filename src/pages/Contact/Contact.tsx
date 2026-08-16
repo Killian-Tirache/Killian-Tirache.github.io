@@ -1,8 +1,15 @@
 import "./Contact.css";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import usePageMeta from "../../hooks/usePageMeta";
 
 export default function Contact() {
+  usePageMeta({
+    title: 'Contact',
+    description:
+      "Une idée, un projet, une collaboration ? Écris-moi, je réponds à tous les messages.",
+  });
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
