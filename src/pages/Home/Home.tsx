@@ -1,25 +1,19 @@
 import './Home.css';
 import helloAnimation from './../../assets/hello-animation.gif';
-import showcaseSiteImage from './../../assets/home-projects-images/showcase-site-image.jpeg';
-import eCommerceImage from './../../assets/home-projects-images/e-commerce-site-image.jpeg';
-import saasImage from './../../assets/home-projects-images/saas-site-image.jpeg';
-import eLearningImage from './../../assets/home-projects-images/e-learning-site-image.jpeg';
-import crmImage from './../../assets/home-projects-images/crm-site-image.jpeg';
-import appMobileImage from './../../assets/home-projects-images/app-mobile-site-image.jpeg';
 import { Link } from 'react-router-dom';
 import Magnet from '../../components/MagnetButton/MagnetButton';
 import HomeCard from '../../components/HomeCard/HomeCard';
 import FadeInWhenVisible from '../../components/FadeinWhenVisible/FadeInWhenVisible';
+import { projectsData } from '../../data/projects';
+import usePageMeta from '../../hooks/usePageMeta';
 
 export default function Home() {
-    const projectListArray = [
-        { name: 'Site vitrine', image: showcaseSiteImage,  },
-        { name: 'E-commerce', image: eCommerceImage,  },
-        { name: 'SAAS', image: saasImage,  },
-        { name: 'E-learning', image: eLearningImage,  },
-        { name: 'CRM', image: crmImage,  },
-        { name: 'Application mobile', image: appMobileImage,  },
-    ]
+    usePageMeta({
+        description:
+            "Killian Tirache, développeur web full-stack. Je conçois, développe et déploie des applications web : Under the Deep, un MMORPG idle dans le navigateur, et FushiNote, un suivi d'animés installable.",
+    });
+
+    const projectListArray = projectsData.slice(0, 6);
 
     return (
         <main>
@@ -32,16 +26,16 @@ export default function Home() {
             </section>
             <section className='home__projects'>
                 <h2>Projets</h2>
-                <p>Voici quelques projets auxquels j'ai participé:</p>
+                <p>Quelques projets que j'ai conçus et développés</p>
                 <div className="home__projects-list">
                     {projectListArray.map((project, index) => (
                         <FadeInWhenVisible
-                        key={index}
+                        key={project.id}
                         transition={{ delay: index * 0.15, duration: 0.5 }}
                         className='home__project_container'
                         >
-                            <Link to="/projects" className="home__project" style={{backgroundImage: `url(${project.image})`}} key={index}>
-                                <h3>{project.name}</h3>
+                            <Link to={`/projects/${project.id}`} className="home__project" style={{backgroundImage: `url(${project.image})`}}>
+                                <h3>{project.title}</h3>
                             </Link>
                         </FadeInWhenVisible>
                     ))}
@@ -49,7 +43,7 @@ export default function Home() {
                 <div className='primary-button-container'>
                     <Magnet>
                         <Link to="/projects">
-                            <button className='primary-button'>Envie d'en voir plus ?</button>
+                            <button className='primary-button'>Voir tous les projets</button>
                         </Link>
                     </Magnet>
                 </div>
@@ -58,13 +52,13 @@ export default function Home() {
                 <h2>À propos</h2>
                 <p>
                     Je suis un <span>développeur web passionné</span> par la création de sites web.<br/>
-                    J'ai commencé à apprendre le <span>développement web il y a 2 ans</span> et depuis je n'ai jamais céssé d'apprendre.<br/>
+                    J'ai commencé à apprendre le <span>développement web il y a 2 ans</span> et depuis je n'ai jamais cessé d'apprendre.<br/>
                     J'ai une <span>bonne connaissance des technologies web</span> telles que HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, etc...
                 </p>
                 <div className='primary-button-container'>
                     <Magnet>
                         <Link to="/about">
-                            <button className='primary-button'>Envie d'en voir plus ?</button>
+                            <button className='primary-button'>En savoir plus sur moi</button>
                         </Link>
                     </Magnet>
                 </div>

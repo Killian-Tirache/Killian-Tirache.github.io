@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-    const [isSticky, setIsSticky] = useState<Boolean>(false);
+    const [isSticky, setIsSticky] = useState<boolean>(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
     
     useEffect(() => {

@@ -1,4 +1,4 @@
-@import './styles/varibles.css';
+@import './styles/variables.css';
 
 body {
   font-family: var(--font-main);

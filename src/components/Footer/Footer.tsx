@@ -60,7 +60,7 @@ export default function Footer() {
             </button>
           </a>
         </div>
-        <p>&copy; 2025 Mon Portfolio – Tous Droits Reservés.</p>
+        <p>&copy; {new Date().getFullYear()} Mon Portfolio – Tous Droits Reservés.</p>
       </footer>
     )
 }

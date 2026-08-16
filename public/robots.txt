@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://killian-tirache.github.io/sitemap.xml
