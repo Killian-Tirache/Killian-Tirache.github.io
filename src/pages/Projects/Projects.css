@@ -70,6 +70,17 @@
     transition: background 0.3s ease;
 }
 
+.projects__overlay h2 {
+    font-size: 1.4rem;
+}
+
+.projects__overlay p {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .projects__item:hover .projects__overlay {
     background: rgba(0, 0, 0, 0.8);
 }
@@ -194,6 +205,10 @@
         font-size: 1rem;
     }
 
+    .projects__overlay p {
+        font-size: 0.78rem;
+    }
+
     /* Simplifier les effets sur mobile */
     .projects__item:hover {
         transform: none;
@@ -229,6 +244,10 @@
 
     .projects__overlay h2 {
         font-size: 0.9rem;
+    }
+
+    .projects__overlay p {
+        display: none;
     }
 }
 
