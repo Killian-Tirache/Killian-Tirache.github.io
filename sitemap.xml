@@ -17,6 +17,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://killian-tirache.github.io/projects/5</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://killian-tirache.github.io/about</loc>
     <priority>0.7</priority>
   </url>
