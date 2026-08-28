@@ -7,13 +7,10 @@ import fushiNoteCover from '../assets/projects/fushinote/cover.webp';
 import fushiNoteCollections from '../assets/projects/fushinote/collections.webp';
 import fushiNotePlanning from '../assets/projects/fushinote/planning.webp';
 import fushiNoteMobile from '../assets/projects/fushinote/mobile.webp';
-
-import showcaseSiteImage from '../assets/home-projects-images/showcase-site-image.jpeg';
-import eCommerceImage from '../assets/home-projects-images/e-commerce-site-image.jpeg';
-import saasImage from '../assets/home-projects-images/saas-site-image.jpeg';
-import eLearningImage from '../assets/home-projects-images/e-learning-site-image.jpeg';
-import crmImage from '../assets/home-projects-images/crm-site-image.jpeg';
-import appMobileImage from '../assets/home-projects-images/app-mobile-site-image.jpeg';
+import ticketingCover from '../assets/projects/ticketing/cover.png';
+import ticketingTickets from '../assets/projects/ticketing/tickets.png';
+import ticketingTicketDetail from '../assets/projects/ticketing/ticket-detail.png';
+import ticketingChat from '../assets/projects/ticketing/chat.png';
 
 export interface IProjectLink {
   label: string;
@@ -37,7 +34,7 @@ export interface IProject {
   category: string;
   description: string;
   technologies: string[];
-  /** Projets réels : tout ce qui suit est optionnel pour les fiches encore en placeholder. */
+  /** Informations complémentaires affichées sur les fiches détaillées. */
   year?: string;
   role?: string;
   status?: string;
@@ -49,7 +46,6 @@ export interface IProject {
   /** Précision affichée sous les liens (dépôt privé, accès sur demande…). */
   linksNote?: string;
   featured?: boolean;
-  placeholder?: boolean;
 }
 
 export const projectsData: IProject[] = [
@@ -203,75 +199,92 @@ export const projectsData: IProject[] = [
     linksNote: 'Dépôt privé — je le présente volontiers sur demande.',
     featured: true,
   },
-
-  /* ------------------------------------------------------------------ */
-  /* Fiches de démonstration — à remplacer par tes projets réels.        */
-  /* ------------------------------------------------------------------ */
-  {
-    id: 3,
-    title: 'Projet C',
-    tagline: 'Site vitrine responsive',
-    image: showcaseSiteImage,
-    category: 'vitrine',
-    description:
-      "Un site vitrine moderne et responsive conçu pour présenter l'identité d'une entreprise avec élégance.",
-    technologies: ['React', 'CSS', 'Framer Motion'],
-    placeholder: true,
-  },
-  {
-    id: 4,
-    title: 'Projet D',
-    tagline: 'Boutique en ligne complète',
-    image: eCommerceImage,
-    category: 'ecommerce',
-    description:
-      'Une plateforme e-commerce complète avec panier, paiement sécurisé et gestion de produits.',
-    technologies: ['React', 'Node.js', 'MongoDB'],
-    placeholder: true,
-  },
   {
     id: 5,
-    title: 'Projet E',
-    tagline: 'Application SaaS avec tableau de bord',
-    image: saasImage,
+    title: 'Ticketing App',
+    tagline: 'Support multi-entreprises, du signalement à la résolution',
+    image: ticketingCover,
     category: 'saas',
+    year: 'Depuis janvier 2026',
+    role: 'Conception et développement full-stack, tests et déploiement',
+    status: 'En ligne — front-end sur Vercel, API sur Render',
     description:
-      'Une application SaaS performante avec gestion des utilisateurs, authentification et dashboard en temps réel.',
-    technologies: ['React', 'Express', 'PostgreSQL'],
-    placeholder: true,
-  },
-  {
-    id: 6,
-    title: 'Projet F',
-    tagline: 'Plateforme d’apprentissage en ligne',
-    image: eLearningImage,
-    category: 'elearning',
-    description:
-      'Une plateforme d’apprentissage en ligne interactive permettant aux utilisateurs de suivre des cours, de visualiser leur progression et d’obtenir des certificats.',
-    technologies: ['React', 'Redux', 'Node.js', 'Express', 'MongoDB', 'Framer Motion'],
-    placeholder: true,
-  },
-  {
-    id: 7,
-    title: 'Projet G',
-    tagline: 'Outil de gestion client sur mesure',
-    image: crmImage,
-    category: 'crm',
-    description:
-      'Outil de gestion client sur mesure avec interface claire, filtres dynamiques et export de données.',
-    technologies: ['React', 'NestJS', 'MongoDB'],
-    placeholder: true,
-  },
-  {
-    id: 8,
-    title: 'Projet H',
-    tagline: 'Application mobile hybride',
-    image: appMobileImage,
-    category: 'mobile',
-    description:
-      'Une application mobile hybride développée pour permettre aux utilisateurs de gérer leurs tâches et leurs projets en déplacement. Synchronisation en temps réel, notifications push et design minimaliste.',
-    technologies: ['React Native', 'Expo', 'Firebase', 'TypeScript'],
-    placeholder: true,
+      "Ticketing App centralise les demandes de support de plusieurs entreprises : création, recherche et suivi des tickets, assignation aux équipes, changement de statut et discussion en temps réel. Chaque rôle — administrateur, support ou utilisateur — voit les données et les actions qui lui sont destinées.",
+    context: [
+      "Le point de départ était de construire un outil de support qui reste simple pour l’utilisateur tout en gérant les contraintes d’une organisation réelle : plusieurs entreprises, des droits différents et un historique fiable des actions.",
+      "J’ai séparé l’interface React de l’API Express, puis fait appliquer les permissions côté serveur. Les tickets reçoivent une référence propre à leur entreprise et à leur année, le dashboard s’adapte au rôle connecté et Socket.IO relie chaque discussion à son ticket.",
+    ],
+    stats: [
+      { value: '3', label: 'rôles aux permissions distinctes' },
+      { value: '4 × 4', label: 'statuts et niveaux de priorité' },
+      { value: '143', label: 'fichiers source TypeScript' },
+      { value: '147', label: 'cas de test back-end' },
+    ],
+    highlights: [
+      {
+        title: 'Des droits calés sur l’organisation',
+        text: "L’administrateur pilote l’ensemble de la plateforme, le support intervient sur les entreprises qui lui sont rattachées et l’utilisateur ne voit que les tickets de ses entreprises. Les contrôles sont appliqués par l’API, pas seulement masqués dans l’interface.",
+      },
+      {
+        title: 'Un cycle de ticket lisible',
+        text: "Chaque demande reçoit une référence comme NOVA-0128-2026, unique par entreprise et par année. Recherche, filtres, tri, pagination, assignation, quatre priorités et quatre statuts donnent une vue exploitable même quand le volume augmente.",
+      },
+      {
+        title: 'La conversation au même endroit',
+        text: "Chaque ticket possède sa discussion Socket.IO. Les participants reçoivent les nouveaux messages en direct et les équipes support sont prévenues lorsqu’un ticket est créé, sans avoir à rafraîchir la page.",
+      },
+      {
+        title: 'Sécurité et traçabilité',
+        text: "Session JWT en cookie httpOnly, mots de passe hachés avec bcrypt, validation des entrées, limitation de débit et contrôle d’origine protègent l’API. Les créations, modifications, suppressions et connexions alimentent un journal d’audit réservé à l’administrateur.",
+      },
+    ],
+    gallery: [
+      {
+        src: ticketingTickets,
+        caption: 'La liste des tickets : recherche, filtres, priorités, statuts et pagination dans une même vue.',
+      },
+      {
+        src: ticketingTicketDetail,
+        caption: 'Le détail d’une demande : contexte, entreprise, assignation et état accessibles sans changer d’écran.',
+      },
+      {
+        src: ticketingChat,
+        caption: 'La discussion liée au ticket, mise à jour en temps réel pour garder le diagnostic au bon endroit.',
+      },
+    ],
+    technologies: [
+      'TypeScript 5',
+      'React 19',
+      'Vite 7',
+      'React Router',
+      'Tailwind CSS 4',
+      'shadcn/ui',
+      'TanStack Table',
+      'Zustand',
+      'React Hook Form / Zod',
+      'Node.js 22',
+      'Express 5',
+      'Socket.IO',
+      'MongoDB / Mongoose',
+      'JWT / bcrypt',
+      'Jest / Supertest',
+      'Docker Compose',
+      'GitHub Actions',
+      'Vercel / Render',
+    ],
+    links: [
+      {
+        label: 'Voir l’application',
+        url: 'https://ticketing-app-pink.vercel.app/',
+        primary: true,
+      },
+      {
+        label: 'Voir le code',
+        url: 'https://github.com/Killian-Tirache/ticketing-app',
+      },
+    ],
+    linksNote: 'Application de démonstration — connexion requise. Les captures utilisent des données fictives.',
+    featured: true,
   },
 ];
 
@@ -279,10 +292,5 @@ export const projectCategories = [
   'tous',
   'jeu',
   'webapp',
-  'vitrine',
-  'ecommerce',
   'saas',
-  'elearning',
-  'crm',
-  'mobile',
 ];

@@ -10,7 +10,7 @@ import usePageMeta from '../../hooks/usePageMeta';
 export default function Home() {
     usePageMeta({
         description:
-            "Killian Tirache, développeur web full-stack. Je conçois, développe et déploie des applications web : Under the Deep, un MMORPG idle dans le navigateur, et FushiNote, un suivi d'animés installable.",
+            "Killian Tirache, développeur web full-stack. Je conçois, développe et déploie des applications web : Under the Deep, FushiNote et Ticketing App.",
     });
 
     const projectListArray = projectsData.slice(0, 6);

@@ -9,7 +9,7 @@ export default function Projects() {
   usePageMeta({
     title: 'Mes projets',
     description:
-      "Les projets que j'ai conçus et développés : jeu web temps réel, applications full-stack TypeScript, sites vitrines.",
+      "Les projets que j'ai conçus et développés : jeu web temps réel, applications full-stack TypeScript et outil de support multi-entreprises.",
   });
 
   const [activeCategory, setActiveCategory] = useState('tous');
