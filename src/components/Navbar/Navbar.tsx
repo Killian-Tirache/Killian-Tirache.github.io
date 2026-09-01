@@ -8,7 +8,7 @@ interface NavbarProps {
 
 export default function Navbar({ isMobileMenuOpen, closeMobileMenu }: NavbarProps) {
     return (
-        <nav className={`navbar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+        <nav id="main-navigation" aria-label="Navigation principale" className={`navbar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
             <NavLink
                 to="/"
                 className={({ isActive }) => isActive ? "active" : ""}
@@ -17,21 +17,21 @@ export default function Navbar({ isMobileMenuOpen, closeMobileMenu }: NavbarProp
                 Accueil
             </NavLink>
             <NavLink
-                to="/projects"
+                to="/projects/"
                 className={({ isActive }) => isActive ? "active" : ""}
                 onClick={closeMobileMenu}
             >
                 Projets
             </NavLink>
             <NavLink
-                to="/about"
+                to="/about/"
                 className={({ isActive }) => isActive ? "active" : ""}
                 onClick={closeMobileMenu}
             >
                 À propos
             </NavLink>
             <NavLink
-                to="/contact"
+                to="/contact/"
                 className={({ isActive }) => isActive ? "active" : ""}
                 onClick={closeMobileMenu}
             >

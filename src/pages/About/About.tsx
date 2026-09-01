@@ -2,6 +2,7 @@ import "./About.css";
 import { motion } from "framer-motion";
 import profileImage from "./../../assets/home-image.webp";
 import usePageMeta from "../../hooks/usePageMeta";
+import { PAGE_META } from "../../data/pageMeta";
 
 const skillGroups = [
   {
@@ -75,14 +76,10 @@ const skillGroups = [
 ];
 
 export default function About() {
-  usePageMeta({
-    title: 'À propos',
-    description:
-      'Développeur web full-stack : React, TypeScript, Node.js, PostgreSQL, Docker. Mon parcours, mes compétences et ma façon de travailler.',
-  });
+  usePageMeta(PAGE_META.about);
 
   return (
-    <main className="about">
+    <main id="main-content" className="about" tabIndex={-1}>
       <section className="about__intro">
         <motion.div
           className="about__text"

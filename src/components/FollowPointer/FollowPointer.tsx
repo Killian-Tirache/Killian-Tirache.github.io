@@ -1,11 +1,13 @@
 import "./FollowPointer.css"
-import { frame, motion, useSpring } from "framer-motion"
+import { frame, motion, useReducedMotion, useSpring } from "framer-motion"
 import { RefObject, useEffect, useRef, useState } from "react"
 
 export default function FollowPointer() {
     const ref = useRef<HTMLDivElement>(null)
-    const { x, y } = useFollowPointer(ref)
     const [isTouchDevice, setIsTouchDevice] = useState(false)
+    const shouldReduceMotion = useReducedMotion()
+    const isDisabled = isTouchDevice || Boolean(shouldReduceMotion)
+    const { x, y } = useFollowPointer(ref, isDisabled)
 
     useEffect(() => {
         const checkTouchDevice = () => {
@@ -26,22 +28,23 @@ export default function FollowPointer() {
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
-    if (isTouchDevice) return null
+    if (isDisabled) return null
 
-    return <motion.div className="follow-pointer" ref={ref} style={{ x, y }} />
+    return <motion.div className="follow-pointer" ref={ref} style={{ x, y }} aria-hidden="true" />
 }
 
 const spring = { damping: 10, stiffness: 70, restDelta: 0.001 }
 
-export function useFollowPointer(ref: RefObject<HTMLDivElement | null>) {
+function useFollowPointer(ref: RefObject<HTMLDivElement | null>, disabled = false) {
     const x = useSpring(0, spring)
     const y = useSpring(0, spring)
 
     useEffect(() => {
-        if (!ref.current) return
+        if (disabled || !ref.current) return
 
         const handlePointerMove = ({ clientX, clientY }: MouseEvent) => {
-            const element = ref.current!
+            const element = ref.current
+            if (!element) return
 
             frame.read(() => {
                 x.set(clientX + window.scrollX - element.offsetLeft - element.offsetWidth / 2)
@@ -53,7 +56,7 @@ export function useFollowPointer(ref: RefObject<HTMLDivElement | null>) {
 
         return () =>
             window.removeEventListener("pointermove", handlePointerMove)
-    }, [])
+    }, [disabled, ref, x, y])
 
     return { x, y }
 }

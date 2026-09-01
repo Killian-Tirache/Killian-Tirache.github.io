@@ -2,28 +2,26 @@ import './NotFound.css';
 import NotFoundImage from '../../assets/not-found-image.webp';
 import { Link } from 'react-router-dom';
 import usePageMeta from '../../hooks/usePageMeta';
+import { NOT_FOUND_META } from '../../data/pageMeta';
 
 export default function NotFound() {
-    usePageMeta({
-        title: 'Page introuvable',
-        description: "Cette page n'existe pas ou plus. Retour à l'accueil ou vers les projets.",
-    });
+    usePageMeta(NOT_FOUND_META);
 
     return (
-      <main className="not-found">
+      <main id="main-content" className="not-found" tabIndex={-1}>
         <p className="not-found__code">404</p>
         <h1>Tu t'es perdu ?</h1>
         <p className="not-found__text">
           Cette page n'existe pas, ou n'existe plus. Ça arrive.
         </p>
 
-        <Link to={'/'} className="not-found__image">
+        <div className="not-found__image">
             <img src={NotFoundImage} alt="" />
-        </Link>
+        </div>
 
         <div className="not-found__actions">
           <Link to="/" className="not-found__link primary">Retour à l'accueil</Link>
-          <Link to="/projects" className="not-found__link">Voir mes projets</Link>
+          <Link to="/projects/" className="not-found__link">Voir mes projets</Link>
         </div>
       </main>
     );

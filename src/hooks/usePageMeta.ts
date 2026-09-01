@@ -1,33 +1,63 @@
 import { useEffect } from 'react';
+import {
+  type PageMetaDefinition,
+  toAbsoluteUrl,
+} from '../data/pageMeta';
 
-const SITE_NAME = 'Killian Tirache';
-const BASE_TITLE = 'Killian Tirache — Développeur web full-stack';
+type MetaKey = 'name' | 'property';
 
-interface PageMeta {
-  /** Titre de la page, sans le nom du site (ajouté automatiquement). */
-  title?: string;
-  description?: string;
+function setMetaContent(key: MetaKey, attribute: string, content?: string) {
+  const selector = `meta[${key}="${attribute}"]`;
+  const existing = document.head.querySelector<HTMLMetaElement>(selector);
+
+  if (!content) {
+    existing?.remove();
+    return;
+  }
+
+  const tag = existing ?? document.createElement('meta');
+  tag.setAttribute(key, attribute);
+  tag.content = content;
+  if (!existing) document.head.append(tag);
 }
 
-function setMetaContent(selector: string, content: string) {
-  const tag = document.head.querySelector<HTMLMetaElement>(selector);
-  if (tag) tag.content = content;
+function setCanonical(href?: string) {
+  const existing = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+
+  if (!href) {
+    existing?.remove();
+    return;
+  }
+
+  const tag = existing ?? document.createElement('link');
+  tag.rel = 'canonical';
+  tag.href = href;
+  if (!existing) document.head.append(tag);
 }
 
-/**
- * Met à jour le titre et la description du document au changement de page.
- * Les balises Open Graph statiques d'index.html restent la référence pour les
- * aperçus de partage : elles sont lues sans exécuter le JavaScript.
- */
-export default function usePageMeta({ title, description }: PageMeta) {
+/** Synchronise toutes les métadonnées après une navigation côté client. */
+export default function usePageMeta(page: PageMetaDefinition) {
   useEffect(() => {
-    const fullTitle = title ? `${title} — ${SITE_NAME}` : BASE_TITLE;
-    document.title = fullTitle;
-    setMetaContent('meta[property="og:title"]', fullTitle);
+    const canonical = page.path ? toAbsoluteUrl(page.path) : undefined;
+    const image = toAbsoluteUrl(page.image);
 
-    if (description) {
-      setMetaContent('meta[name="description"]', description);
-      setMetaContent('meta[property="og:description"]', description);
-    }
-  }, [title, description]);
+    document.title = page.title;
+    setCanonical(canonical);
+    setMetaContent('name', 'description', page.description);
+    setMetaContent('name', 'robots', page.noIndex ? 'noindex, follow' : undefined);
+
+    setMetaContent('property', 'og:url', canonical);
+    setMetaContent('property', 'og:title', page.title);
+    setMetaContent('property', 'og:description', page.description);
+    setMetaContent('property', 'og:image', image);
+    setMetaContent('property', 'og:image:type', page.imageType);
+    setMetaContent('property', 'og:image:width', String(page.imageWidth));
+    setMetaContent('property', 'og:image:height', String(page.imageHeight));
+    setMetaContent('property', 'og:image:alt', page.imageAlt);
+
+    setMetaContent('name', 'twitter:title', page.title);
+    setMetaContent('name', 'twitter:description', page.description);
+    setMetaContent('name', 'twitter:image', image);
+    setMetaContent('name', 'twitter:image:alt', page.imageAlt);
+  }, [page]);
 }

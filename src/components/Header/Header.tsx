@@ -1,11 +1,12 @@
 import "./Header.css";
 import Navbar from "../Navbar/Navbar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
     const [isSticky, setIsSticky] = useState<boolean>(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
     
     useEffect(() => {
         const handleScroll = () => {
@@ -17,6 +18,19 @@ export default function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    useEffect(() => {
+        if (!isMobileMenuOpen) return;
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key !== "Escape") return;
+            setIsMobileMenuOpen(false);
+            menuButtonRef.current?.focus();
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isMobileMenuOpen]);
+
     // Fermer le menu au clic sur un lien
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
@@ -25,13 +39,17 @@ export default function Header() {
     return (
         <header className={isSticky ? "header sticky" : "header"}>
             <Link to="/" onClick={closeMobileMenu}>
-                <h2>Kt.</h2>
+                <span className="header__logo">Kt.</span>
             </Link>
             
-            <button 
+            <button
+                ref={menuButtonRef}
+                type="button"
                 className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Menu"
+                aria-label={isMobileMenuOpen ? "Fermer le menu principal" : "Ouvrir le menu principal"}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="main-navigation"
             >
                 <span></span>
                 <span></span>

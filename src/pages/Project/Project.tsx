@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { projectsData } from "../../data/projects";
 import FadeInWhenVisible from "../../components/FadeinWhenVisible/FadeInWhenVisible";
 import usePageMeta from "../../hooks/usePageMeta";
+import { getProjectPageMeta, NOT_FOUND_META } from "../../data/pageMeta";
 
 export default function Project() {
   const { id } = useParams<{ id?: string }>();
@@ -11,30 +12,29 @@ export default function Project() {
 
   const project = projectsData.find((p) => p.id === projectId);
 
-  usePageMeta({
-    title: project ? project.title : "Projet introuvable",
-    description: project ? project.tagline : undefined,
-  });
+  usePageMeta(project ? getProjectPageMeta(project.id) ?? NOT_FOUND_META : NOT_FOUND_META);
 
   if (!project) {
     return (
-      <div className="project__not-found">
-        <h2>Projet introuvable</h2>
-        <Link to="/projects" className="project__back">
+      <main id="main-content" className="project__not-found" tabIndex={-1}>
+        <h1>Projet introuvable</h1>
+        <Link to="/projects/" className="project__back">
           ← Retour aux projets
         </Link>
-      </div>
+      </main>
     );
   }
 
   return (
     <motion.main
+      id="main-content"
+      tabIndex={-1}
       className="project"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <Link to="/projects" className="project__back project__back--top">
+      <Link to="/projects/" className="project__back project__back--top">
         ← Retour aux projets
       </Link>
 
@@ -167,7 +167,7 @@ export default function Project() {
         </ul>
       </FadeInWhenVisible>
 
-      <Link to="/projects" className="project__back">
+      <Link to="/projects/" className="project__back">
         ← Retour aux projets
       </Link>
     </motion.main>

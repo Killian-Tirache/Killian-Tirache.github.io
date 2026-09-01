@@ -1,5 +1,21 @@
 @import './styles/variables.css';
 
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  background: var(--background-color);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 body {
   font-family: var(--font-main);
   color: var(--text-color);
@@ -40,6 +56,57 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--gap-section);
+}
+
+main:focus {
+  outline: none;
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .home__text h1 img {
+    display: none;
+  }
+
+  :is(
+    a,
+    button,
+    .projects__item,
+    .skill__group,
+    .project__highlight,
+    .project__shot
+  ):hover {
+    transform: none !important;
+  }
+
+  .social-media:hover > .button {
+    transform: none !important;
+  }
 }
 
 @media (max-width: 768px)  {

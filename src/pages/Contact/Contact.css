@@ -53,6 +53,15 @@
   gap: 1rem 1.2rem;
 }
 
+.form__honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 /* champs occuperont 2 colonnes si textarea */
 .form__row {
   display: flex;
@@ -91,7 +100,8 @@
 /* focus */
 .contact__form input:focus,
 .contact__form textarea:focus {
-  outline: none;
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
   border-color: rgba(168,85,247,0.85);
   box-shadow: 0 6px 18px rgba(168,85,247,0.06);
 }

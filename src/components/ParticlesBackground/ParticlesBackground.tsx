@@ -3,17 +3,21 @@ import { ISourceOptions } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { useEffect, useMemo, useState } from "react";
 import { loadFull } from "tsparticles";
+import { useReducedMotion } from "framer-motion";
 
 const ParticlesBackground = () => {
   const [init, setInit] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (shouldReduceMotion) return;
+
     initParticlesEngine(async (engine) => {
       await loadFull(engine);
     }).then(() => {
       setInit(true);
     });
-  }, []);
+  }, [shouldReduceMotion]);
 
   const options: ISourceOptions = useMemo(
     () => ({
@@ -71,7 +75,7 @@ const ParticlesBackground = () => {
     [],
   );
 
-  if (init) {
+  if (init && !shouldReduceMotion) {
     return (
       <Particles
         id="tsparticles"

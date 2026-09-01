@@ -6,17 +6,15 @@ import HomeCard from '../../components/HomeCard/HomeCard';
 import FadeInWhenVisible from '../../components/FadeinWhenVisible/FadeInWhenVisible';
 import { projectsData } from '../../data/projects';
 import usePageMeta from '../../hooks/usePageMeta';
+import { PAGE_META } from '../../data/pageMeta';
 
 export default function Home() {
-    usePageMeta({
-        description:
-            "Killian Tirache, développeur web full-stack. Je conçois, développe et déploie des applications web : Under the Deep, FushiNote et Ticketing App.",
-    });
+    usePageMeta(PAGE_META.home);
 
     const projectListArray = projectsData.slice(0, 6);
 
     return (
-        <main>
+        <main id="main-content" tabIndex={-1}>
             <section className="home">
                 <div className="home__text">
                     <h1>Salut <img src={helloAnimation} alt="" /></h1>
@@ -34,7 +32,7 @@ export default function Home() {
                         transition={{ delay: index * 0.15, duration: 0.5 }}
                         className='home__project_container'
                         >
-                            <Link to={`/projects/${project.id}`} className="home__project" style={{backgroundImage: `url(${project.image})`}}>
+                            <Link to={`/projects/${project.id}/`} className="home__project" style={{backgroundImage: `url(${project.image})`}}>
                                 <h3>{project.title}</h3>
                             </Link>
                         </FadeInWhenVisible>
@@ -42,9 +40,7 @@ export default function Home() {
                 </div>
                 <div className='primary-button-container'>
                     <Magnet>
-                        <Link to="/projects">
-                            <button className='primary-button'>Voir tous les projets</button>
-                        </Link>
+                        <Link to="/projects/" className='primary-button'>Voir tous les projets</Link>
                     </Magnet>
                 </div>
             </section>
@@ -57,9 +53,7 @@ export default function Home() {
                 </p>
                 <div className='primary-button-container'>
                     <Magnet>
-                        <Link to="/about">
-                            <button className='primary-button'>En savoir plus sur moi</button>
-                        </Link>
+                        <Link to="/about/" className='primary-button'>En savoir plus sur moi</Link>
                     </Magnet>
                 </div>
             </section>

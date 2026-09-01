@@ -1,21 +1,76 @@
 import "./Preloader.css";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
-const Preloader = ({ setIsLoading }: {setIsLoading: React.Dispatch<React.SetStateAction<boolean>>} ) => {
+interface PreloaderProps {
+  onComplete: () => void;
+}
+
+const Preloader = ({ onComplete }: PreloaderProps) => {
+  const shouldReduceMotion = useReducedMotion();
+  const preloaderRef = useRef<HTMLDivElement>(null);
   const [fadeOut, setFadeOut] = useState(false);
+  const [isVisible, setIsVisible] = useState(
+    () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   const wordsPart1 = ["Bienvenue", "sur", "mon"];
   const wordsPart2 = ["Site", "Portfolio"];
 
   useEffect(() => {
-    setTimeout(() => setFadeOut(true), 3500);
-    setTimeout(() => setIsLoading(false), 3500);
-    setTimeout(() => 4000);
-  }, []);
+    if (!isVisible) return;
+
+    const fadeDelay = shouldReduceMotion ? 0 : 3500;
+    const removeDelay = shouldReduceMotion ? 0 : 4200;
+    const fadeTimer = window.setTimeout(() => {
+      setFadeOut(true);
+      onComplete();
+    }, fadeDelay);
+    const removeTimer = window.setTimeout(() => setIsVisible(false), removeDelay);
+
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [isVisible, onComplete, shouldReduceMotion]);
+
+  useEffect(() => {
+    if (!isVisible || fadeOut || !preloaderRef.current?.parentElement) return;
+
+    const siblings = Array.from(preloaderRef.current.parentElement.children)
+      .filter((element): element is HTMLElement => (
+        element instanceof HTMLElement && element !== preloaderRef.current
+      ));
+    const previousValues = siblings.map((element) => element.inert);
+
+    siblings.forEach((element) => {
+      element.inert = true;
+    });
+
+    return () => {
+      siblings.forEach((element, index) => {
+        element.inert = previousValues[index];
+      });
+    };
+  }, [fadeOut, isVisible]);
+
+  const skipIntroduction = () => {
+    setFadeOut(true);
+    setIsVisible(false);
+    onComplete();
+    window.requestAnimationFrame(() => {
+      document.getElementById("main-content")?.focus({ preventScroll: true });
+    });
+  };
+
+  if (!isVisible) return null;
 
   return (
-    <div className={`preloader ${fadeOut ? "fade-out" : ""}`}>
+    <div ref={preloaderRef} className={`preloader ${fadeOut ? "fade-out" : ""}`}>
+      <button type="button" className="preloader__skip" onClick={skipIntroduction}>
+        Passer l’introduction
+      </button>
       <motion.div className="spinner"
+        aria-hidden="true"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -23,10 +78,10 @@ const Preloader = ({ setIsLoading }: {setIsLoading: React.Dispatch<React.SetStat
         <div className="spinner1"></div>
       </motion.div>
 
-      <motion.h3>
+      <motion.div className="preloader__message" aria-hidden="true">
         {wordsPart1.map((word, index) => (
           <motion.span
-            key={index}
+            key={word}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -42,7 +97,7 @@ const Preloader = ({ setIsLoading }: {setIsLoading: React.Dispatch<React.SetStat
         <br />
         {wordsPart2.map((word, index) => (
           <motion.b
-            key={index}
+            key={word}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -55,9 +110,10 @@ const Preloader = ({ setIsLoading }: {setIsLoading: React.Dispatch<React.SetStat
             {word}
           </motion.b>
         ))}
-      </motion.h3>
+      </motion.div>
 
       <motion.div className="progress-loader"
+        aria-hidden="true"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}

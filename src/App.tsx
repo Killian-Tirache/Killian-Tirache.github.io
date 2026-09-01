@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
@@ -15,8 +15,14 @@ import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isIntroductionComplete, setIsIntroductionComplete] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
+
+  const finishIntroduction = useCallback(() => {
+    setIsIntroductionComplete(true);
+  }, []);
   
   useEffect(() => {
     const handleResize = () => {
@@ -29,19 +35,21 @@ export default function App() {
 
   return (
     <div className="app">
-      <Preloader setIsLoading={setIsLoading} />
+      <a className="skip-link" href="#main-content">Aller au contenu principal</a>
+      <Preloader onComplete={finishIntroduction} />
       <ParticlesBackground />
       <ScrollToTop />
       <Header />
-      { isLoading ? "" : 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/projects/:id" element={<Project />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes> }
+      {isIntroductionComplete && (
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<Project />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      )}
       {isDesktop && <FollowPointer />}
       <Footer />
     </div>

@@ -1,6 +1,6 @@
 import "./HomeCard.css";
 import HomeImage from "./../../assets/home-image.webp";
-import { motion, useMotionValue, animate } from "framer-motion";
+import { motion, useMotionValue, animate, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import FadeInWhenVisible from "../FadeinWhenVisible/FadeInWhenVisible";
 
@@ -8,8 +8,10 @@ const HomeCard = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (shouldReduceMotion) return;
     const card = cardRef.current;
     if (!card) return;
 
@@ -51,7 +53,7 @@ const HomeCard = () => {
         }}
       >
         <FadeInWhenVisible initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}>
-          <img src={HomeImage} alt="developer coding" />
+          <img src={HomeImage} alt="Killian Tirache en train de développer une application" />
         </FadeInWhenVisible>
       </motion.div>
     </div>
