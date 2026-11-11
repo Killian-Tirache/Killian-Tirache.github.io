@@ -114,10 +114,11 @@ function staticPages(): Plugin {
         source: renderPage(indexSource, NOT_FOUND_META),
       })
 
-      const sitemap = bundle['sitemap.xml']
-      if (sitemap?.type === 'asset') {
-        sitemap.source = renderSitemap()
-      }
+      this.emitFile({
+        type: 'asset',
+        fileName: 'sitemap.xml',
+        source: renderSitemap(),
+      })
     },
   }
 }
