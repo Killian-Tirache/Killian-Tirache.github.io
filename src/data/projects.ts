@@ -7,6 +7,11 @@ import fushiNoteCover from '../assets/projects/fushinote/cover.webp';
 import fushiNoteCollections from '../assets/projects/fushinote/collections.webp';
 import fushiNotePlanning from '../assets/projects/fushinote/planning.webp';
 import fushiNoteMobile from '../assets/projects/fushinote/mobile.webp';
+import fairlioCover from '../assets/projects/fairlio/cover.webp';
+import fairlioCle from '../assets/projects/fairlio/cle.webp';
+import fairlioGestes from '../assets/projects/fairlio/gestes.webp';
+import fairlioMobileAccueil from '../assets/projects/fairlio/mobile-accueil.webp';
+import fairlioMobileMembres from '../assets/projects/fairlio/mobile-membres.webp';
 import ticketingCover from '../assets/projects/ticketing/cover.png';
 import ticketingTickets from '../assets/projects/ticketing/tickets.png';
 import ticketingTicketDetail from '../assets/projects/ticketing/ticket-detail.png';
@@ -57,7 +62,7 @@ export const projectsData: IProject[] = [
     category: 'jeu',
     year: 'Depuis mai 2026',
     role: 'Conception et développement complets (jeu, back-end, front-end, infra)',
-    status: 'En développement — préparation de l’alpha privée',
+    status: 'En ligne sur under-the-deep.tech — playtests fermés sur clé d’accès',
     description:
       "Under the Deep est un MMORPG idle en monde fantasy : on descend dans un gouffre de huit zones élémentaires, on récolte, on craft, on combat en temps réel et on progresse même hors ligne. Tout le jeu tourne dans le navigateur, sans installation.",
     context: [
@@ -122,6 +127,7 @@ export const projectsData: IProject[] = [
       'Caddy',
       'GitHub Actions',
     ],
+    links: [{ label: 'Voir le jeu', url: 'https://under-the-deep.tech', primary: true }],
     linksNote: 'Dépôt privé le temps de l’alpha — je le présente volontiers sur demande.',
     featured: true,
   },
@@ -197,6 +203,84 @@ export const projectsData: IProject[] = [
     ],
     links: [{ label: 'Voir le site', url: 'https://fushinote.com', primary: true }],
     linksNote: 'Dépôt privé — je le présente volontiers sur demande.',
+    featured: true,
+  },
+  {
+    id: 3,
+    title: 'fairlio',
+    tagline: 'Les finances partagées d’un foyer, sans dette entre personnes',
+    image: fairlioCover,
+    category: 'webapp',
+    year: 'Depuis août 2026',
+    role: 'Conception produit, développement full-stack et mise en production',
+    status: 'En ligne sur fairlio.fr',
+    description:
+      "fairlio répond à une seule question : combien chacun doit verser sur le compte commun ce mois-ci, et pourquoi ce montant-là. Le foyer y est traité comme une caisse à provisionner, jamais comme une dette entre deux personnes.",
+    context: [
+      "Les applications de partage de dépenses calculent après coup qui doit combien à qui. C’est pratique pour un week-end entre amis, inutile pour deux personnes qui tiennent une caisse commune et veulent surtout savoir quoi virer le 2 du mois.",
+      "fairlio inverse le calcul : on déclare les charges et les revenus, on choisit une Clé de répartition, et l’application en déduit le Requis de chacun, mois par mois. La somme des Requis d’un Mois égale exactement l’Assiette — personne ne doit rien à personne, la caisse est simplement couverte.",
+    ],
+    stats: [
+      { value: '4', label: 'modes de répartition, et une Clé par dépense' },
+      { value: '~220', label: 'fichiers TypeScript' },
+      { value: '79', label: 'fichiers de tests' },
+      { value: '35', label: 'migrations SQL' },
+    ],
+    highlights: [
+      {
+        title: 'Le passé ne se recalcule jamais',
+        text: "Un changement de Clé porte une date d’effet : les Mois déjà passés gardent la règle qui y était en vigueur. Rouvrir un Mois six mois plus tard explique son montant sans que personne ait à reconstituer quoi que ce soit.",
+      },
+      {
+        title: 'L’étanchéité est posée dans la base',
+        text: "Les politiques Row Level Security de PostgreSQL décident qui voit quoi, Foyer par Foyer et rôle par rôle. Trois suites de tests dédiées — étanchéité, identité et porte d’entrée — vérifient qu’aucun chemin de l’application ne les contourne.",
+      },
+      {
+        title: 'Les rôles et les départs sont prévus',
+        text: "Créateur, Membre et Observateur n’ont ni les mêmes droits ni les mêmes Requis. Un départ fige le Requis de qui avait déjà versé et laisse trente jours de lecture seule ; la suppression d’un Foyer passe par trente jours de grâce avant l’effacement, assuré par un travailleur pg-boss.",
+      },
+      {
+        title: 'Installable, et qui relance au bon moment',
+        text: "PWA installable sur mobile comme sur ordinateur, notifications push et deux relances avant l’échéance. Avec une contre-métrique assumée : une notification par opération ferait tout couper, donc le volume est tenu.",
+      },
+    ],
+    gallery: [
+      {
+        src: fairlioCle,
+        caption: 'Quatre façons de répartir — et une Clé propre à une dépense quand le loyer ne suit pas la même règle.',
+      },
+      {
+        src: fairlioGestes,
+        caption: 'Quatre gestes posés une fois : rien n’est à redéclarer d’un mois sur l’autre.',
+      },
+      {
+        src: fairlioMobileAccueil,
+        caption: 'La vue d’ensemble sur mobile : le Requis du Mois, le déjà versé et l’écart, en un écran.',
+        portrait: true,
+      },
+      {
+        src: fairlioMobileMembres,
+        caption: 'Le détail par Membre : Requis, Réel et Écart, dont la somme retombe toujours sur l’Assiette.',
+        portrait: true,
+      },
+    ],
+    technologies: [
+      'TypeScript',
+      'Next.js 16',
+      'React 19',
+      'better-auth',
+      'Drizzle ORM',
+      'PostgreSQL',
+      'Row Level Security',
+      'pg-boss',
+      'PWA / Web Push',
+      'Vitest',
+      'Docker',
+      'Caddy',
+    ],
+    links: [{ label: 'Voir le site', url: 'https://fairlio.fr', primary: true }],
+    linksNote:
+      'Dépôt privé — les captures de l’application connectée utilisent des données fictives.',
     featured: true,
   },
   {
